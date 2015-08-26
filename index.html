@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>type</title>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" />  
+  <style>
+		.thumbnail {
+			width: 20px;
+			display: inline-block;
+			margin-right: 10px;
+		}
+		.small {
+			font-size: 10px;
+			font-weight: 100;
+			font-style: italic;
+		}
+  </style>
+</head>
+<body>
+
+	<br/>
+
+	<div class="container">
+		<h3>type</h3>
+		<input id="search" type="text" placeholder="type state">
+	</div>
+
+
+	<script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+			// can just as easily be external JSON
+			var data = [
+
+				{	"stateCode": "CA", 
+					"stateName": "California",
+					"image": "images/ca.jpg"
+				},
+
+		    {	"stateCode": "AZ", 
+		    	"stateName": "Arizona",
+		    	"image": "images/az.jpg"
+		    },
+
+		    {	"stateCode": "NY", 
+		    	"stateName": "New York",
+		    	"image": "images/ny.jpg"
+		    },
+
+		    {	"stateCode": "NV", 
+		    	"stateName": "Nevada",
+		    	"image": "images/nv.jpg"
+		    },
+
+		    {	"stateCode": "IL", 
+		    	"stateName": "Illinois",
+		    	"image": "images/il.jpg"
+		    }
+
+			];
+
+			var states;
+			var map;	
+
+		$('#search').typeahead({
+			source: function(query, process) {
+				
+				map = {};
+				states = [];
+
+				$.each(data, function(i,state){
+
+					map[state.stateName] = state;
+					
+					states.push(state.stateName);
+
+				});
+				process(states);
+			},
+			highlighter: function(item) {
+				for (var prop in data) {
+					if(data[prop].stateName === item){
+						html =  '<li><img class="thumbnail" src="' + data[prop].image + '">' + data[prop].stateName + '<span class="small"> ' + data[prop].stateCode + '</span></li>';
+					}
+				}
+				return html;
+			}
+		});
+	</script>
+</body>
+</html>
